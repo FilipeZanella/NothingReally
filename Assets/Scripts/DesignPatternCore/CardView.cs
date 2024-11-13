@@ -5,15 +5,14 @@ using UnityEngine.UI;
 
 public class CardView : MonoBehaviour
 {
-    public Action<Card> OnSelectCard;
-
     [SerializeField] private Button frame;
     [SerializeField] private Image image;
     [SerializeField] private AnimationCurve angularCurve;
 
-    private Card card;
     private Sprite cardSprite;
     private bool isDisplayingImage = false;
+
+    public Card card { get; private set; }
 
     public void Initialize(Card _card, Sprite sprite)
     {
@@ -27,7 +26,7 @@ public class CardView : MonoBehaviour
     {
         if (!isDisplayingImage)
         {
-            OnSelectCard?.Invoke(card);
+            GameEvents.OnSelectCard?.Invoke(this);
             Display();
         }
     }
@@ -37,7 +36,7 @@ public class CardView : MonoBehaviour
         if (isDisplayingImage)
         {
             isDisplayingImage = false;
-            FlipAnimation(null);
+            StartCoroutine(FlipAnimation(null));
         }
     }
 
@@ -72,7 +71,7 @@ public class CardView : MonoBehaviour
                 ChangeImage(newImage);
             }
         }
-        ,0.38f);
+        , 0.38f);
     }
 
     private void ChangeImage(Sprite newImage)
