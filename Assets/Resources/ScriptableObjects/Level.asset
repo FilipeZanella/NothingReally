@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Level
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 1558529966, guid: 2c60a9252bdcc684ab0cc73e1a0f9108, type: 3}
-  - {fileID: 785353226, guid: 2c60a9252bdcc684ab0cc73e1a0f9108, type: 3}
-  - {fileID: 752505638, guid: 2c60a9252bdcc684ab0cc73e1a0f9108, type: 3}
-  - {fileID: 1440762506, guid: 2c60a9252bdcc684ab0cc73e1a0f9108, type: 3}
-  - {fileID: 76017035, guid: 2c60a9252bdcc684ab0cc73e1a0f9108, type: 3}
-  - {fileID: 958737433, guid: 2c60a9252bdcc684ab0cc73e1a0f9108, type: 3}
-  - {fileID: 21300000, guid: 2a8d41893c4daa744b6d6e7fac486a18, type: 3}
+  - {fileID: -1633003497, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}
+  - {fileID: 1863486248, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}
+  - {fileID: 1890937539, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}
+  - {fileID: 464609047, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}
+  - {fileID: -735955487, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}
+  - {fileID: 1067806687, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}
+  - {fileID: -1094062770, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}
+  - {fileID: -899038086, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}
+  - {fileID: -1548896812, guid: 5392d304ece5d8f47a41a3c9c88f19fd, type: 3}

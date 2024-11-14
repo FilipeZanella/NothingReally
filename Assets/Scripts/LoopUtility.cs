@@ -2,6 +2,20 @@
 using System.Collections;
 using UnityEngine;
 
+public static class Coroutines 
+{
+    public static MonoBehaviour starter;
+
+    public static Coroutine Start(IEnumerator c)
+    {
+        return starter.StartCoroutine(c);
+    }
+    public static void Stop(Coroutine c)
+    {
+        starter.StopCoroutine(c);
+    }
+}
+
 public static class LoopUtility
 {
     public static IEnumerator Tween(Action<float> action, float duration)

@@ -20,6 +20,11 @@ public class GridController : MonoBehaviour
         {
             var cardInstance = Instantiate(prefab, transform);
             cardInstance.Initialize(card, level.GetSpriteByIndex(card.imageIndex));
+
+            if (card.paired)
+            {
+                cardInstance.Display();
+            }
         }
         
         handler.UpdateGrid(grid);   

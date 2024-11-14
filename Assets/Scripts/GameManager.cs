@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Level level;
 
+    private void Awake()
+    {
+        Coroutines.starter = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

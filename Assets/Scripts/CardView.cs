@@ -35,12 +35,13 @@ public class CardView : MonoBehaviour
     {
         if (isDisplayingImage)
         {
+            GameEvents.OnHideCard?.Invoke(this);
             isDisplayingImage = false;
             StartCoroutine(FlipAnimation(null));
         }
     }
 
-    private void Display()
+    public void Display()
     {
         if (!isDisplayingImage)
         {

@@ -1,4 +1,6 @@
-﻿public class Card
+﻿
+[System.Serializable]
+public class Card
 {
     public int index;
     public int imageIndex;
