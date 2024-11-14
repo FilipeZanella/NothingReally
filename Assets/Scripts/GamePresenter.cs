@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.AI;
 
-public class GamePresenter : IDisposable
+public class GamePresenter 
 {
     private GameView gameView;
     private GameModel gameModel;
@@ -24,19 +24,23 @@ public class GamePresenter : IDisposable
         GameEvents.OnPaired += HandlePairing;
         GameEvents.OnSelectCard += HandleCardSelection;
         GameEvents.SaveStatus += Save;
+        GameEvents.OnWin += OnWin; 
+    }
+
+    private void OnWin() 
+    {
+        gameView.FinishGame();
+
+        GameEvents.OnPaired -= HandlePairing;
+        GameEvents.OnSelectCard -= HandleCardSelection;
+        GameEvents.SaveStatus -= Save;
+        GameEvents.OnWin -= OnWin;
     }
 
     public void Save()
     {
         var status = gameModel.GetStatus();
         gameSaver.Save(status);
-    }
-
-    public void Dispose()
-    {
-        GameEvents.OnPaired -= HandlePairing;
-        GameEvents.OnSelectCard -= HandleCardSelection;
-        GameEvents.SaveStatus -= Save;
     }
 
     private void Score()
@@ -48,6 +52,7 @@ public class GamePresenter : IDisposable
     private void Attempt()
     {
         gameModel.Attempt();
+        gameView.UpdateScore(gameModel.score);
         gameView.UpdateAttempt(gameModel.attempt);
     }
 
@@ -59,7 +64,7 @@ public class GamePresenter : IDisposable
         Score();
 
         int max = gameModel.cards.Length / 2;
-        if (gameModel.score == max)
+        if (gameModel.pairs == max)
         {
             GameEvents.OnWin?.Invoke();
         }
@@ -75,8 +80,6 @@ public class GamePresenter : IDisposable
                 selectedCards[1].Hide();
             }
 
-            Attempt();
-
             selectedCards.Clear();
         }
 
@@ -90,6 +93,10 @@ public class GamePresenter : IDisposable
             if (selectedCards[0].card.imageIndex == selectedCards[1].card.imageIndex)
             {
                 GameEvents.OnPaired?.Invoke(selectedCards[0], selectedCards[1]);
+            }
+            else 
+            {
+                Attempt();
             }
         }
     }

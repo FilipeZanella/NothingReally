@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         context = new StateContext();
-        var initialState = new GamePlayState(context, level);
+        var initialState = new GameState(context, level);
         context.SetState(initialState);
     }
 }

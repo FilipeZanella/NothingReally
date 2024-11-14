@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,24 +16,20 @@ public class GameView : ViewPanel
     [SerializeField] private Button saveButton;
     [SerializeField] private Image saveLoading;
 
+    [SerializeField] private AnimationCurve endOfGameAnimationCurve;
+
     public void Initialize(Level level, GameStatusJson data)
     {
         IGridResponsivenessHandler handler = new ResponsiveGrid(aspect);
         controller.Initialize(level, data.cards, handler);
         UpdateScore(data.pairs);
         UpdateAttempt(data.attempts);
-
-        GameEvents.OnWin += OnWin;
     }
 
-    private void OnDestroy()
-    {
-        GameEvents.OnWin -= OnWin;  
-    }
-
-    private void OnWin() 
+    public void FinishGame() 
     {
         saveButton.interactable = false;
+        StartCoroutine(EndOfGameAniamtion());
     }
 
     public void Save()
@@ -51,6 +46,23 @@ public class GameView : ViewPanel
     public void UpdateAttempt(int attempt)
     {
         attemptLabel.text = "Attempt: " + attempt.ToString();
+    }
+
+    private IEnumerator EndOfGameAniamtion ()
+    {
+        yield return new WaitForSeconds(1.23f);
+
+        StartCoroutine(LoopUtility.Tween((t) => scoreLabel.transform.localScale = Vector3.one * endOfGameAnimationCurve.Evaluate(t), 0.23f));
+        StartCoroutine(LoopUtility.Tween((t) => attemptLabel.transform.localScale = Vector3.one * endOfGameAnimationCurve.Evaluate(t), 0.23f));
+
+        foreach (Transform child in controller.transform) 
+        {
+            StartCoroutine(LoopUtility.Tween((t) => child.localScale = Vector3.one * endOfGameAnimationCurve.Evaluate(t), 0.23f));
+
+            yield return new WaitForSeconds(0.08f);
+        }
+
+        GameEvents.EndOfGame?.Invoke();
     }
 
     private IEnumerator AnimateLoading()

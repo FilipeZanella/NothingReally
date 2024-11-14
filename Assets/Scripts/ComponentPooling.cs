@@ -13,12 +13,9 @@ public class ComponentPooling<T> where T : Component
     [SerializeField] private List<PoolingObject> data = new List<PoolingObject>();
 
     private Transform holder;
-    private T prefab;
 
-    public ComponentPooling(T _prefab, int initialCount)
+    public ComponentPooling(int initialCount)
     {
-        prefab = _prefab;
-
         holder = new GameObject().transform;
         holder.name = typeof(T).Name + "_PoolingHolder";
 
@@ -31,10 +28,16 @@ public class ComponentPooling<T> where T : Component
     protected PoolingObject GetNewInstance() 
     {
         var obj = new PoolingObject();
-        obj.poolingObject = UnityEngine.Object.Instantiate(prefab, holder);
+        obj.poolingObject = new GameObject().AddComponent<T>();
+        obj.poolingObject.transform.parent = holder;
         data.Add(obj);
 
         return obj;
+    }
+
+    public void Clear() 
+    {
+        data.Clear();
     }
 
     public void Destroy(T instance) 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class State 
 {
-    private StateContext context;
+    protected StateContext context { get; private set; }
 
     public State(StateContext _context)
     {
@@ -16,6 +16,6 @@ public abstract class State
 
     protected void ChangeState(State newState)
     {
-
+        context.SetState(newState);
     }
 }

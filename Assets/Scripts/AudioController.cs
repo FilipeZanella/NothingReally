@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioController 
 {
@@ -12,9 +13,9 @@ public class AudioController
 
     private AudioController() 
     {
-        var prefab = new GameObject().AddComponent<AudioSource>();
+        SceneManager.sceneLoaded += (s, u) =>pooling.Clear();
 
-        pooling = new ComponentPooling<AudioSource>(prefab, 3);
+        pooling = new ComponentPooling<AudioSource>(3);
     }
 
     public AudioSource GetSource() 
@@ -26,10 +27,13 @@ public class AudioController
         return instance;
     }
 
-    private IEnumerator DestroyInstance(AudioSource instance) 
+    private IEnumerator DestroyInstance(AudioSource instance)
     {
-        yield return new WaitWhile(()=> instance.isPlaying);
+        yield return new WaitWhile(() => instance && instance.isPlaying);
 
-        pooling.Destroy(instance);
+        if (instance)
+        {
+            pooling.Destroy(instance);
+        }
     }
 }
